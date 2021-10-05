@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ejemplo</title>
+        <link rel="stylesheet" href="estilo.css">
+    </head>
+    <body>
+        <div id="contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Target</th>
+                        <th>Capacity</th>
+                        <th>Category_id</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody class="cuerpoTabla">                    
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function cargarTabla(){
+            $.ajax({
+                url: 'https://g0b35eea19e596b-db202109231843.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/library/library',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response){
+                    var resultado="";
+                    response.items.forEach(function(item){
+                        resultado+="<tr><td>"+item.id+"</td><td>";
+                        resultado+=item.target+"</td><td>";
+                        resultado+=item.capacity+"</td><td>";
+                        resultado+=item.category_id+"</td><td>";
+                        resultado+=item.name+"</td></tr>";
+                    });
+                    $(".cuerpoTabla").html(resultado);                
+                },
+                error: function(xhr,status){
+                    console.log(xhr.responseText);
+                },
+                complete: function(xhr,status){
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            cargarTabla();
+        });
+    </script>
+</html>
